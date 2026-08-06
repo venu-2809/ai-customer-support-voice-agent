@@ -6,6 +6,7 @@ from models.message import Message
 from fastapi.middleware.cors import CORSMiddleware
 from routers.chat import router as chat_router
 from routers.health import router as health_router
+from routers.speech import router as speech_router
 
 app = FastAPI(title="AI Voice Service Agent")
 app.add_middleware(
@@ -18,3 +19,4 @@ app.add_middleware(
 Base.metadata.create_all(bind=engine)
 app.include_router(chat_router)
 app.include_router(health_router)
+app.include_router(speech_router)
