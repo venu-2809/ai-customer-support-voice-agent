@@ -12,28 +12,31 @@ function VoiceAgent() {
     const [status, setStatus] = useState("idle");
     const [sessionId, setSessionId] = useState(null);
     const activeReplyRef = useRef(null);
-    const {speaking, speak, stopSpeaking } = useSpeechSynthesis();
-    const {recording,startRecording,stopRecording,cancelRecording,setOnSilence,setOnTimeout,setOnSpeech} = useMediaRecorder({
+  //  const {speaking, speak, stopSpeaking } = useSpeechSynthesis();
+    const {speak} = useSpeechSynthesis();
+    const {recording,startRecording,stopRecording,cancelRecording,setOnSilence,setOnTimeout,
+        //setOnSpeech
+    } = useMediaRecorder({
         silenceDuration: 2000,
         noSpeechTimeout: 4000,
-        isAssistantSpeaking: speaking,
+        //isAssistantSpeaking: speaking,
     });
     const isMeaningfulTranscript = (text) => {
         const trimmed = text.trim();
         return trimmed.length > 0 && /[A-Za-z0-9]/.test(trimmed);
     };
-    const handleSpeech = useCallback(() => {
+    //const handleSpeech = useCallback(() => {
 
-        if (!speaking) return;
+     //   if (!speaking) return;
 
-        console.log("🎤 User interrupted AI");
-        activeReplyRef.current = null;
+       // console.log("🎤 User interrupted AI");
+      //  activeReplyRef.current = null;
 
-        stopSpeaking();
+      //  stopSpeaking();
 
-        setStatus("listening");
+      //  setStatus("listening");
 
-    }, [speaking, stopSpeaking]);
+   // }, [speaking, stopSpeaking]);
 
     const sendMessage = useCallback(
         async (message, { restartOnEmpty = false } = {}) => {
@@ -72,7 +75,7 @@ function VoiceAgent() {
                 activeReplyRef.current = { id: replyId };
 
                 setStatus("speaking");
-                startRecording();
+               // startRecording();
 
                 speak(data.reply, () => {
                     if (activeReplyRef.current?.id !== replyId) return;
@@ -117,9 +120,9 @@ function VoiceAgent() {
         };
     }, [cancelRecording]);
 
-    useEffect(() => {
-        setOnSpeech(handleSpeech);
-    }, [handleSpeech, setOnSpeech]);
+    //useEffect(() => {
+    //    setOnSpeech(handleSpeech);
+   // }, [handleSpeech, setOnSpeech]);
     const handleMicClick = async () => {
 
         if (!recording) {

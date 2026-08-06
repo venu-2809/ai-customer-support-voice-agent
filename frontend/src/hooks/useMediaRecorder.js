@@ -3,12 +3,12 @@ import api from "../services/api";
 export default function useMediaRecorder({
     silenceDuration = 2000,
     noSpeechTimeout = 12000,
-    isAssistantSpeaking = false,
+   // isAssistantSpeaking = false,
 } = {}) {
-    const assistantSpeakingRef = useRef(isAssistantSpeaking);
-    useEffect(() => {
-        assistantSpeakingRef.current = isAssistantSpeaking;
-    }, [isAssistantSpeaking]);
+  //  const assistantSpeakingRef = useRef(isAssistantSpeaking);
+  //  useEffect(() => {
+  //      assistantSpeakingRef.current = isAssistantSpeaking;
+  //  }, [isAssistantSpeaking]);
     const mediaRecorderRef = useRef(null);
     const chunksRef = useRef([]);
     const audioContextRef = useRef(null);
@@ -25,13 +25,13 @@ export default function useMediaRecorder({
         recordingRef.current = value;
         setRecording(value);
     }, []);
-    const onSpeechRef = useRef(() => {});
-    const setOnSpeech = useCallback(fn => {
-        onSpeechRef.current = fn;
-    }, []);
+   // const onSpeechRef = useRef(() => {});
+ //   const setOnSpeech = useCallback(fn => {
+  //      onSpeechRef.current = fn;
+   // }, []);
     const onSilenceRef = useRef(() => {});
     const onTimeoutRef = useRef(() => {});
-    const bargeFramesRef = useRef(0);
+   // const bargeFramesRef = useRef(0);
     const setOnSilence = useCallback((fn) => {onSilenceRef.current = fn;}, []);
     const setOnTimeout = useCallback((fn) => {onTimeoutRef.current = fn;}, []);
     const stopAnalysisLoop = () => {
@@ -93,22 +93,22 @@ export default function useMediaRecorder({
                 const THRESHOLD = 0.03;
                 const SPEECH_FRAME_THRESHOLD = 8;
                 if (rms > THRESHOLD) {
-                    if (assistantSpeakingRef.current) {
+                 //   if (assistantSpeakingRef.current) {
 
                         // User trying to interrupt AI
-                        bargeFramesRef.current++;
+                   //     bargeFramesRef.current++;
 
-                        if (bargeFramesRef.current >= 10) {
+                  //      if (bargeFramesRef.current >= 10) {
 
-                            console.log("🛑 Barge-In Detected");
+                   //         console.log("🛑 Barge-In Detected");
 
-                            onSpeechRef.current?.();
+                     //       onSpeechRef.current?.();
 
-                            bargeFramesRef.current = 0;
+                     //       bargeFramesRef.current = 0;
 
-                        }
+                    //    }
 
-                    } else {
+                   // } else {
 
                         // Normal conversation
                         speechFramesRef.current++;
@@ -123,17 +123,18 @@ export default function useMediaRecorder({
 
                         }
 
-                    }
+                    //}
 
                 } else {
 
                     // Reset counters
                     speechFramesRef.current = 0;
-                    bargeFramesRef.current = 0;
+                   // bargeFramesRef.current = 0;
 
                     if (!silenceStartRef.current) {
 
                         silenceStartRef.current = Date.now();
+
 
                     }
 
@@ -245,6 +246,6 @@ export default function useMediaRecorder({
         cancelRecording,
         setOnSilence,
         setOnTimeout,
-        setOnSpeech
+      //  setOnSpeech
     };
 }
