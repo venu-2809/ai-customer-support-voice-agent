@@ -12,7 +12,7 @@ class ChatService:
                 conversation = conversation_service.create_conversation(db)
         conversation_service.save_message(db=db,conversation_id=conversation.id,role="user",content=message)
         history = conversation_service.get_messages(db,conversation.id)
-        response = llm_service.generate_reply(history)
+        response = llm_service.generate_reply(history,db)
         conversation_service.save_message(db=db,conversation_id=conversation.id,role="assistant",content=response["reply"])
         return {
             "session_id": conversation.session_id,

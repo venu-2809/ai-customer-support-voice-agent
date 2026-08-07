@@ -4,10 +4,7 @@ from sqlalchemy.orm import Session
 from database import get_db
 from models.product import Product
 
-router = APIRouter(
-    prefix="/products",
-    tags=["Products"]
-)
+router = APIRouter( prefix="/products", tags=["Products"])
 
 
 @router.get("/")
